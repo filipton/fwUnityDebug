@@ -1,0 +1,29 @@
+﻿@page "/ApiSet"
+@inject NavigationManager NavManager
+
+<h3>ApiSet</h3>
+
+@code {
+    int currentCount = 0;
+
+    protected override void OnInitialized()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("m", out var mode))
+        {
+            if(mode == "w")
+            {
+                if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("text", out var text))
+                {
+                    fwUnityDebug.Data.SaveLogsService.Logs.Insert(0, text);
+                    Index.c.Refresh();
+                }
+            }
+            else if(mode == "clear")
+            {
+                fwUnityDebug.Data.SaveLogsService.Logs.Clear();
+                Index.c.Refresh();
+            }
+        }
+    }
+}

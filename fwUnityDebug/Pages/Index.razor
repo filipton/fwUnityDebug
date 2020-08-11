@@ -1,0 +1,19 @@
+﻿@page "/"
+
+<h1>Unity Debugger</h1>
+
+@if (true) c = this;
+
+@foreach (string s in fwUnityDebug.Data.SaveLogsService.Logs)
+{
+    <p>@s</p>
+}
+
+@code {
+    public static Index c;
+
+    public void Refresh()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+}
